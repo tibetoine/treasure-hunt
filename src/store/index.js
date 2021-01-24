@@ -42,22 +42,25 @@ export default new Vuex.Store({
     addMap(state) {
       state.items.push({
         id: 1,
-        name: 'map',
-        image: 'map.jpg'
+        name: 'Une carte au trésor',
+        image: 'map.jpg',
+        link: 'mapitem'
       })
     },
     addLoupe(state) {
       state.items.push({
         id: 3,
-        name: 'loupe',
-        image: 'loupe.jpg'
+        name: 'Une loupe. Elle pourra être utile',
+        image: 'loupe.png',
+        link: '404'
       })
     },
     addLettre(state) {
       state.items.push({
         id: 5,
-        name: 'lettre',
-        image: 'lettre.jpg'
+        name: 'Une lettre étrange',
+        image: 'lettre.jpg',
+        link: '/lettre'
       })
     }
   },
@@ -69,6 +72,26 @@ export default new Vuex.Store({
       for (let index = 0; index < state.items.length; index++) {
         const item = state.items[index]
         if (item.id === 1) {
+          return item
+        }
+      }
+      return null
+    },
+    getloupe: (state) => {
+      console.log(state.items)
+      for (let index = 0; index < state.items.length; index++) {
+        const item = state.items[index]
+        if (item.id === 3) {
+          return item
+        }
+      }
+      return null
+    },
+    getlettre: (state) => {
+      console.log(state.items)
+      for (let index = 0; index < state.items.length; index++) {
+        const item = state.items[index]
+        if (item.id === 5) {
           return item
         }
       }

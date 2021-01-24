@@ -11,6 +11,8 @@ import Carpet from '../views/Carpet.vue'
 import Window from '../views/Window.vue'
 import Table from '../views/Table.vue'
 import Bag from '../views/Bag.vue'
+import Lettre from '../views/Lettre.vue'
+import Tresor from '../views/Tresor.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +71,16 @@ const routes = [
     path: '/table',
     name: 'Table',
     component: Table
+  },
+  {
+    path: '/lettre',
+    name: 'lettre',
+    component: Lettre
+  },
+  {
+    path: '/tresor',
+    name: 'tresor',
+    component: Tresor
   },
   {
     path: '/about',

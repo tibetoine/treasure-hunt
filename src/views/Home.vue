@@ -65,7 +65,7 @@
         target="_self"
         alt="carpet"
         title="carpet"
-        @click="goTo('carpet')"
+        @click="getLettre()"
         style="cursor:pointer;"
         coords="1186,2596,2684,2498,4344,2579,4252,2648,3994,2699,3569,2705,3092,2631,2702,2694,1972,2665,1697,2654"
         shape="poly"
@@ -93,6 +93,7 @@
     
     <pirate-confirm ref="confirm"></pirate-confirm>
     <pirate-message ref="message"></pirate-message>
+    <pirate-ok ref="ok"></pirate-ok>
   </v-card>
 </template>
 
@@ -103,13 +104,15 @@ import imageMapResize from '@/assets/imageMapResizer.min.js'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import PirateConfirm from '../components/PirateConfirm.vue'
 import PirateMessage from '../components/PirateMessage.vue'
+import PirateOk from '../components/PirateOk.vue'
 
 export default {
   name: 'Home',
   components: {
     SpecialCanvas,
     PirateConfirm,
-    PirateMessage
+    PirateMessage,
+    PirateOk
   },
   data: () => ({
      isMounted: false
@@ -130,6 +133,12 @@ export default {
     },
     getmap() {
       return this.$store.getters.getmap
+    },
+    getloupe() {
+      return this.$store.getters.getloupe
+    },
+    getlettre() {
+      return this.$store.getters.getlettre
     }
   },  
   watch: {
@@ -150,9 +159,21 @@ export default {
     this.isMounted = true
   },
   methods: {
-    ...mapMutations(['addMap', 'addLoupe']),
+    ...mapMutations(['addMap', 'addLoupe', 'addLettre']),
     goTo(link){
-      this.$router.push(link)
+      if (link === 'table') {
+        // Est-ce que j'ai la carte dans mes items
+        if (this.getmap == null ){
+          this.$refs.message.open('Mon bureau', 'Pour l\'instant ce bureau ne va pas m\'aider', { color: 'orange darken-4', image: 'mdi-minus-circle' })
+        } else {
+          this.$refs.ok.open('Carte', 'Eh ouai ! Bonne idée ! Maintenant que tu as une carte, pourquoi ne pas l\'étudier sur ton bureau', { color: 'light-green darken-2', image: 'mdi-magnify' }).then((confirm) => {
+            this.$router.push(link)
+          })   
+          
+        }
+      } else {
+        this.$router.push(link)
+      }
     },
     mouseover(e) {
       // console.log(e.target)
@@ -172,7 +193,7 @@ export default {
     getMap(){
       if (this.getmap == null) {
         this.addMap()
-        this.$refs.message.open('Carte', 'Bravo tu viens de trouver une carte au trésor', { color: 'green darken-4', image: 'mdi-map-legend' }) 
+        this.$refs.ok.open('Carte', 'Bravo tu viens de trouver une carte au trésor', { color: 'light-green darken-2', image: 'mdi-map-legend' }) 
       } else {
         this.$refs.message.open('Carte', 'Vous avez déjà la carte au trésor', { color: 'orange darken-4', image: 'mdi-minus-circle' }) 
       }
@@ -180,9 +201,17 @@ export default {
     getLoupe(){
       if (this.getloupe == null) {
         this.addLoupe()
-        this.$refs.message.open('Loupe', 'Bravo tu viens de trouver une loupe', { color: 'green darken-4', image: 'mdi-magnify' }) 
+        this.$refs.ok.open('Loupe', 'Bravo tu viens de trouver une loupe', { color: 'light-green darken-2', image: 'mdi-magnify' }) 
       } else {
         this.$refs.message.open('Coffre', 'IL n\'y a plus rien là dedans !', { color: 'orange darken-4', image: 'mdi-minus-circle' }) 
+      }
+    },
+    getLettre(){
+      if (this.getlettre == null) {
+        this.addLettre()
+        this.$refs.ok.open('Lettre', 'Bravo tu viens de trouver une lettre', { color: 'light-green darken-2', image: 'mdi-magnify' }) 
+      } else {
+        this.$refs.message.open('Tapis', 'IL n\'y a plus rien là dedans !', { color: 'orange darken-4', image: 'mdi-minus-circle' }) 
       }
     }
   }

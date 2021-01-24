@@ -15,7 +15,9 @@
       <v-btn icon
         ><v-icon large @click="goTo('/')">mdi-map-legend</v-icon></v-btn
       >
-      <v-toolbar-title @click="goTo('/')">Chasse au trésor</v-toolbar-title>
+      <v-toolbar-title @click="goTo('/')"
+        >Chasse au trésor de TYLIO</v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <v-btn icon @click="goTo('/bag')">
         <v-badge color="green" :content="nbitems">
@@ -63,6 +65,7 @@ export default {
     light: (state) => state.light,
     nbitems: (state) => {
       let nbitem = state.items.length
+      console.log(nbitem)
       return '' + nbitem
     }
   }),
