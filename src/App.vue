@@ -11,12 +11,14 @@
     </v-system-bar>
 
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-icon large>mdi-map-legend</v-icon>
-      <v-toolbar-title>Chasse au trésor</v-toolbar-title>
+      <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->
+      <v-btn icon
+        ><v-icon large @click="goTo('/')">mdi-map-legend</v-icon></v-btn
+      >
+      <v-toolbar-title @click="goTo('/')">Chasse au trésor</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon href="bag">
-        <v-badge color="green" content="6">
+      <v-btn icon @click="goTo('/bag')">
+        <v-badge color="green" :content="nbitems">
           <v-icon large>mdi-bag-personal-outline</v-icon>
         </v-badge>
       </v-btn>
@@ -58,10 +60,17 @@ export default {
   data: () => ({ drawer: null }),
   computed: mapState({
     // arrow functions can make the code very succinct!
-    light: (state) => state.light
+    light: (state) => state.light,
+    nbitems: (state) => {
+      let nbitem = state.items.length
+      return '' + nbitem
+    }
   }),
   methods: {
-    ...mapMutations(['turnlight'])
+    ...mapMutations(['turnlight']),
+    goTo(link) {
+      this.$router.push(link)
+    }
   }
 }
 </script>

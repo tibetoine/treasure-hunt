@@ -19,8 +19,7 @@
       <v-card-text v-show="!!message" class="pa-4">{{ message }}</v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn color="green" @click.native="cancel">NON</v-btn>
-        <v-btn color="red lighten-1" @click.native="agree">OUI</v-btn>
+        <v-btn color="green" @click.native="cancel">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -79,6 +78,9 @@ export default {
         this.reject = reject
       })
     },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    },
     agree() {
       this.resolve(true)
       this.dialog = false
@@ -86,9 +88,6 @@ export default {
     cancel() {
       this.resolve(false)
       this.dialog = false
-    },
-    goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     }
   }
 }

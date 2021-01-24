@@ -8,7 +8,7 @@
     <v-card>
       <v-toolbar :color="options.color" dense flat>
         <v-btn icon>
-          <v-icon>mdi-pirate</v-icon>
+          <v-icon>{{ options.image }}</v-icon>
         </v-btn>
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
