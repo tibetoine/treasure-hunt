@@ -120,7 +120,10 @@ export default {
   data: () => ({
      isMounted: false
   }),
-  computed: {
+  computed: {    
+    name(){
+      return this.$store.state.name
+    } ,
     light() {
       return this.$store.state.light
     },
@@ -159,10 +162,12 @@ export default {
     if (this.light === true) {
       imageMapResize()
     }
-    this.$refs.input.open('Nom', 'Quel est ton nom ?', { color: 'light-green darken-2', image: 'mdi-magnify' }).then((tfvalue) => {
-      // console.log('nom ok : ', tfvalue)
-      this.setName(tfvalue)
-    })  
+    if (this.name === '??') {
+      this.$refs.input.open('Nom', 'Quel est ton nom ?', { color: 'light-green darken-2', image: 'mdi-magnify' }).then((tfvalue) => {
+        // console.log('nom ok : ', tfvalue)
+        this.setName(tfvalue)
+      })  
+    }
     this.isMounted = true
   },
   methods: {

@@ -8,6 +8,12 @@
         <p style="color:black;">{{ op1 }} + {{ op2 }}</p>
       </div>
     </div>
+    <v-btn @click="goTo('/bag')" color="primary" class="ma-2 white--text">
+      <v-icon left dark>
+        mdi-arrow-left
+      </v-icon>
+      Revenir au sac
+    </v-btn>
   </v-card>
 </template>
 
