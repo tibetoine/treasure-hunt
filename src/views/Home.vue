@@ -94,6 +94,7 @@
     <pirate-confirm ref="confirm"></pirate-confirm>
     <pirate-message ref="message"></pirate-message>
     <pirate-ok ref="ok"></pirate-ok>
+    <pirate-input ref="input"></pirate-input>
   </v-card>
 </template>
 
@@ -105,6 +106,7 @@ import { mapState, mapMutations, mapGetters } from 'vuex'
 import PirateConfirm from '../components/PirateConfirm.vue'
 import PirateMessage from '../components/PirateMessage.vue'
 import PirateOk from '../components/PirateOk.vue'
+import PirateInput from '../components/PirateInput.vue'
 
 export default {
   name: 'Home',
@@ -112,6 +114,7 @@ export default {
     SpecialCanvas,
     PirateConfirm,
     PirateMessage,
+    PirateInput,
     PirateOk
   },
   data: () => ({
@@ -156,10 +159,14 @@ export default {
     if (this.light === true) {
       imageMapResize()
     }
+    this.$refs.input.open('Nom', 'Quel est ton nom ?', { color: 'light-green darken-2', image: 'mdi-magnify' }).then((tfvalue) => {
+      // console.log('nom ok : ', tfvalue)
+      this.setName(tfvalue)
+    })  
     this.isMounted = true
   },
   methods: {
-    ...mapMutations(['addMap', 'addLoupe', 'addLettre']),
+    ...mapMutations(['addMap', 'addLoupe', 'addLettre', 'setName']),
     goTo(link){
       if (link === 'table') {
         // Est-ce que j'ai la carte dans mes items

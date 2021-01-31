@@ -16,7 +16,7 @@
         ><v-icon large @click="goTo('/')">mdi-map-legend</v-icon></v-btn
       >
       <v-toolbar-title @click="goTo('/')"
-        >Chasse au trésor de TYLIO</v-toolbar-title
+        >Chasse au trésor de {{ name }}</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-btn icon @click="goTo('/bag')">
@@ -53,6 +53,8 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+
+    
   </v-app>
 </template>
 
@@ -63,14 +65,20 @@ export default {
   computed: mapState({
     // arrow functions can make the code very succinct!
     light: (state) => state.light,
+    name: (state) => state.name,
     nbitems: (state) => {
       let nbitem = state.items.length
-      console.log(nbitem)
+      // console.log(nbitem)
       return '' + nbitem
     }
   }),
+  mounted() {
+    this.initEnigma2()
+    
+    // console.log('App mounted')
+  },
   methods: {
-    ...mapMutations(['turnlight']),
+    ...mapMutations(['turnlight', 'initEnigma2', 'setName']),
     goTo(link) {
       this.$router.push(link)
     }

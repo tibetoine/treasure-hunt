@@ -1,18 +1,19 @@
 <template>
   <div>
     <v-card color="white" v-if="!codeok">
-      <v-form v-model="valid">
+      <v-form @submit.prevent="foundcode()">
         <v-card-text color="black">
           <v-text-field
             color="black"
             label="Code secret"
             outlined
             v-model="csecret"
+            ref="tf"
           ></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-btn
-            @click="foundcode()"
+            type="submit"
             color="light-green darken-2"
             class="ma-2 white--text"
           >
@@ -20,6 +21,12 @@
               mdi-check
             </v-icon>
             Essayer ce code !
+          </v-btn>
+          <v-btn @click="goTo('/')" color="primary" class="ma-2 white--text">
+            <v-icon left dark>
+              mdi-arrow-left
+            </v-icon>
+            Revenir à la carte
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -127,10 +134,7 @@
               <v-spacer></v-spacer>
             </v-app-bar>
             <v-card-text>
-              <p>2 ↑</p>
-              <p>3 →</p>
-              <p>1 ↑</p>
-              <p>1 ←</p>
+              <p v-for="op in ops">{{ op.steps }} {{ op.text }}</p>
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -168,11 +172,16 @@ export default {
   }),
   computed: mapState({
     // arrow functions can make the code very succinct!
-    items: (state) => state.items
+    items: (state) => state.items,
+    op1: (state) => state.enigma.op1,
+    op2: (state) => state.enigma.op2,
+    ops: (state) => state.enigma2.ops,
+    result: (state) => state.enigma2.result
   }),
   mounted() {
     this.htmltable = this.drawTable()
-    console.log(this.htmltable)
+    this.$refs.tf.focus()
+    // console.log(this.htmltable)
   },
   methods: {
     proceed(i) {
@@ -182,13 +191,14 @@ export default {
       document.querySelector('#td' + i).style.backgroundColor = '#6BE535'
       document.querySelector('#td' + i).style.opacity = '0.5'
       this.last = i
-      console.log(i)
 
       return ''
     },
     foundcode() {
-      console.log(this.csecret)
-      if (this.csecret == 23) {
+      // console.log('!!!!!!!!!!!!!!!!!!!!', this.csecret)
+      let result = '' + (this.op1 + this.op2)
+      // console.log('result : ', result)
+      if (this.csecret == result) {
         this.$refs.ok
           .open('Code bon', "Bravo c'est le bon code !", {
             color: 'light-green darken-2',
@@ -216,7 +226,8 @@ export default {
         })
         return
       }
-      if (this.last == 35) {
+      let result = '' + this.result
+      if (this.last == result) {
         this.goTo('/tresor')
       } else {
         this.$refs.ok.open('Non', "Non le trésor n'est pas là !", {

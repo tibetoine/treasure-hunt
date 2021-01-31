@@ -65,7 +65,7 @@ export default {
 
     drawRect(coOrdStr) {
       var mCoords = coOrdStr.split(',')
-      console.log(mCoords)
+      // console.log(mCoords)
       var top, left, bot, right
       left = mCoords[0]
       top = mCoords[1]

@@ -1,7 +1,7 @@
 <template>
   <v-card color="#ccc" > 
     <img src="@/assets/tresor.jpg" alt="tresor" class="tresor" ref="tresor" id="tresorId"></img>
-    <v-card-title class="justify-center" text-color="primary">Bravo Tylio! Tu as trouvé le trésor !</v-card-title>
+    <v-card-title class="justify-center" text-color="primary">Bravo {{ name }}! Tu as trouvé le trésor !</v-card-title>
     <v-card-subtitle class="text-center">Demande à tes parents de te donner le trésor</v-card-subtitle>
     
   </v-card>
@@ -21,7 +21,8 @@ export default {
   }),
   computed: mapState({
     // arrow functions can make the code very succinct!
-    items: (state) => state.items
+    items: (state) => state.items,
+    name: (state) => state.name
   }),
   mounted() {
   },
